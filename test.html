@@ -15,7 +15,7 @@ canvas {
 var myGamePiece;
 var myObstacles = [];
 var myScore;
-var myBackground = new component(640, 480, "background.png", 0, 0, "image");
+var myBackground = new component(640, 480, "background2.jpg", 0, 0, "background");
 
 function startGame() {
     myGamePiece = new component(30, 30, "bird.png", 10, 120, "image");
@@ -41,7 +41,7 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
-    if (type == "image") {
+    if (type == "image" || type == "background") {
         this.image = new Image();
         this.image.src = color;
     }
@@ -56,11 +56,14 @@ function component(width, height, color, x, y, type) {
     this.gravitySpeed = 0;
     this.update = function() {
         ctx = myGameArea.context;
-        if (type == "image") {
+        if (type == "image" || type == "background") {
             ctx.drawImage(this.image, 
                 this.x, 
                 this.y,
                 this.width, this.height);
+                if (type == "background") {
+                    ctx.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
+                }
         }else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
