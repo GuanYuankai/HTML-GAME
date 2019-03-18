@@ -15,6 +15,8 @@ canvas {
 var myGamePiece;
 var myObstacles = [];
 var mySound;
+var myMusic;
+var myclick;
 var myScore;
 var myBackground = new component(640, 480, "background2.jpg", 0, 0, "background");
 
@@ -24,7 +26,11 @@ function startGame() {
     myGamePiece.gravity = 0.05;
     mySound = new sound("fall.mp3");
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myMusic = new sound("opening.mp3");
+    myclick = new sound("click.mp3");
+    myMusic.play();
     myGameArea.start();
+ 
 }
 
 var myGameArea = {
@@ -122,6 +128,7 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             mySound.play();
+            myMusic.stop();
             myGameArea.stop();
             return;
         } 
@@ -180,9 +187,8 @@ function accelerate(n) {
     myGamePiece.gravity = n;
 }
 </script>
-<br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-<p>Click the ACCELERATE button to start the game</p>
-<p>How long can you stay alive? Use the ACCELERATE button to stay in the air..</p>
+<div style="text-align: center; width:640px">
+<button onmousedown="accelerate(-0.2)" onmousedown="myclick.start()"  onmouseup="accelerate(0.05)">ACCELERATE</button>
+</div>
 </body>
 </html>
