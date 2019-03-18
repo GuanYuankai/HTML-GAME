@@ -9,14 +9,13 @@ canvas {
 }
 </style>
 </head>
-<body onload="startGame()">
+<body>
 <script>
 
 var myGamePiece;
 var myObstacles = [];
 var mySound;
 var myMusic;
-var myclick;
 var myScore;
 var myBackground = new component(640, 480, "background2.jpg", 0, 0, "background");
 
@@ -25,9 +24,9 @@ function startGame() {
     myGamePiece = new component(30, 30, "bird.png", 10, 120, "image");
     myGamePiece.gravity = 0.05;
     mySound = new sound("fall.mp3");
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myScore = new component("15px", "Consolas", "black", 280, 40, "text");
     myMusic = new sound("opening.mp3");
-    myclick = new sound("click.mp3");
+
     myMusic.play();
     myGameArea.start();
  
@@ -188,7 +187,14 @@ function accelerate(n) {
 }
 </script>
 <div style="text-align: center; width:640px">
-<button onmousedown="accelerate(-0.2)" onmousedown="myclick.start()"  onmouseup="accelerate(0.05)">ACCELERATE</button>
+<button onmousedown="startGame()">START</button>
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">FLY!</button>
+<p>Manipulating the birds over the obstacles!</p>
+<p>Click start to enter the game page</p>
+<p>Then click on FLY! Start flying</p>
+<p>Click on FLY! Let the bird accelerate upwards</p>
+<p>Let the bird pass through the obstacle, the longer the flight time, the higher the score</p> 
+
 </div>
 </body>
 </html>
