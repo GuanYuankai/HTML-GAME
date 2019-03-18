@@ -14,12 +14,15 @@ canvas {
 
 var myGamePiece;
 var myObstacles = [];
+var mySound;
 var myScore;
 var myBackground = new component(640, 480, "background2.jpg", 0, 0, "background");
+
 
 function startGame() {
     myGamePiece = new component(30, 30, "bird.png", 10, 120, "image");
     myGamePiece.gravity = 0.05;
+    mySound = new sound("fall.mp3");
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
@@ -34,6 +37,10 @@ var myGameArea = {
         this.frameNo = 0;
         updateGameArea();
         },
+
+    stop : function() {
+        clearInterval(this.interval);
+    },   
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -114,6 +121,8 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
+            mySound.play();
+            myGameArea.stop();
             return;
         } 
     }
@@ -143,6 +152,21 @@ function updateGameArea() {
     myGamePiece.newPos();
     myGamePiece.update();
 
+}
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
 }
 
 function everyinterval(n) {
