@@ -15,7 +15,7 @@ canvas {
 var myGamePiece;
 var myObstacles = [];
 var myScore;
-var myBackground;
+var myBackground = new component(640, 480, "background.png", 0, 0, "image");
 
 function startGame() {
     myGamePiece = new component(30, 30, "bird.png", 10, 120, "image");
@@ -115,6 +115,8 @@ function updateGameArea() {
         } 
     }
     myGameArea.clear();
+    myBackground.newPos(); 
+    myBackground.update();
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
@@ -133,8 +135,10 @@ function updateGameArea() {
     }
     myScore.text="SCORE: " + myGameArea.frameNo;
     myScore.update();
+ 
     myGamePiece.newPos();
     myGamePiece.update();
+
 }
 
 function everyinterval(n) {

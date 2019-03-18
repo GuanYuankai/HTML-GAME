@@ -13,9 +13,11 @@ canvas {
 <script>
 
 var myGamePiece;
+var myBackground;
 
 function startGame() {
     myGamePiece = new component(30, 30, "bird.png", 10, 120, "image");
+    myBackground = new component(656, 270, "background.png", 0, 0, "image");
     myGameArea.start();
 }
 
@@ -64,44 +66,41 @@ function component(width, height, color, x, y, type) {
     this.newPos = function() {
         this.x += this.speedX;
         this.y += this.speedY;        
-    }
+    }    
 }
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.newPos();
+    myBackground.speedX = -1;
+    myBackground.newPos();    
+    myBackground.update();
+    myGamePiece.newPos();    
     myGamePiece.update();
 }
 
-function moveup() {
-    myGamePiece.speedY = -1; 
-}
-
-function movedown() {
-    myGamePiece.speedY = 1; 
-}
-
-function moveleft() {
-    myGamePiece.speedX = -1; 
-}
-
-function moveright() {
-    myGamePiece.speedX = 1; 
+function move(dir) {
+    myGamePiece.image.src = "bird.png";
+    if (dir == "up") {myGamePiece.speedY = -1; }
+    if (dir == "down") {myGamePiece.speedY = 1; }
+    if (dir == "left") {myGamePiece.speedX = -1; }
+    if (dir == "right") {myGamePiece.speedX = 1; }
 }
 
 function clearmove() {
+    myGamePiece.image.src = "bird.png";
     myGamePiece.speedX = 0; 
     myGamePiece.speedY = 0; 
 }
 </script>
 <div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+  <button onmousedown="move('up')" onmouseup="clearmove()" ontouchstart="move('up')">UP</button><br><br>
+  <button onmousedown="move('left')" onmouseup="clearmove()" ontouchstart="move('left')">LEFT</button>
+  <button onmousedown="move('right')" onmouseup="clearmove()" ontouchstart="move('right')">RIGHT</button><br><br>
+  <button onmousedown="move('down')" onmouseup="clearmove()" ontouchstart="move('down')">DOWN</button>
 </div>
 
-<p>The component constructor uses the built-in image object to draw images onto the canvas.</p>
+<p>The background image is 656px wide, and when it's over it's over.</p>
+<p>You will learn how to make a infinite loop of the background in the next example.</p>
 
 </body>
 </html>
